@@ -1,12 +1,7 @@
-    FROM golang:1.25.3-alpine3.22
-    
-    WORKDIR /app
+FROM golang:1.25.3-alpine3.22
 
-    COPY ./main.go /app/
+WORKDIR /app
 
-    CMD ["go", "run", "main.go"]
- 
+COPY ./main.go /app/
 
-
-        
-
+CMD ["go", "run", "main.go"]

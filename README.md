@@ -1,4 +1,4 @@
-#Тестовый проект
+# Тестовый проект
 
-##Работа с git, github, docker
+## Работа с git, github, docker
 
