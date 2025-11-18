@@ -18,12 +18,11 @@ func main() {
 	cache.Put(6, "aaa")
 	cache.Put(7, "ada")
 
-	val, ok := cache.Get(2)
+	val, ok := cache.Get(4)
 	fmt.Println(val, ok)
 
-	val, ok = cache.Get(4)
+	val, ok = cache.Get(5)
 	fmt.Println(val, ok)
 
-	fmt.Printf("%+v\n", cache.Data)
-	fmt.Printf("%+v\n", cache.Order)
+	fmt.Println(cache.Size())
 }

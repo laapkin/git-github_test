@@ -4,38 +4,51 @@ type KeyT = int
 type ValueT = string
 
 type Cache struct {
-	Data  map[KeyT]ValueT
-	Order []KeyT
+	data     map[KeyT]ValueT
+	order    []KeyT
+	indexKey int // куда записывать новый элемент
+	capacity int
 }
 
-func New(size int) *Cache {
-	sizeCache := make(map[KeyT]ValueT, size)
-	sizeSlice := make([]KeyT, 0, size)
-	s := Cache{Data: sizeCache, Order: sizeSlice}
-
-	return &s
+func New(capacity int) *Cache {
+	return &Cache{
+		data:     make(map[KeyT]ValueT, capacity),
+		order:    make([]KeyT, capacity),
+		indexKey: 0,
+		capacity: capacity,
+	}
 }
 
 func (ca *Cache) Get(key KeyT) (ValueT, bool) { // получает
-	val, ok := ca.Data[key]
+	val, ok := ca.data[key]
 
 	return val, ok
 }
 
 // кладет значение по ключу в кеш
 func (ca *Cache) Put(key KeyT, value ValueT) {
-	if len(ca.Order) == cap(ca.Order) {
-		delete(ca.Data, ca.Order[0])
+	// очищать/заменять данные только при забитой емкости
+	if len(ca.data) == ca.capacity {
+		// узнать самый старый ключ
+		old_key := ca.order[ca.indexKey]
 
-		order := make([]KeyT, len(ca.Order)-1, cap(ca.Order))
-		copy(order, ca.Order[1:])
-		ca.Order = order
+		// удалить старые данные из мапы
+		delete(ca.data, old_key)
 	}
 
-	ca.Data[key] = value
-	ca.Order = append(ca.Order, key)
+	// добавить в мапу новое значение по новому ключу
+	ca.data[key] = value
+	// добавить новую пару в срез порядка
+	ca.order[ca.indexKey] = key
+
+	// обновить следующий индекс для записи
+	ca.indexKey = (ca.indexKey + 1) % ca.capacity
 }
 
 func (ca *Cache) Size() int {
-	return len(ca.Data)
+	return len(ca.data)
+}
+
+func (ca *Cache) String() string {
+	return ""
 }
