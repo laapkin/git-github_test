@@ -14,14 +14,25 @@ func main() {
 	cache.Put(2, "пер")
 	cache.Put(3, "тер")
 	cache.Put(4, "мер")
-	cache.Put(5, "кер")
-	cache.Put(6, "aaa")
-	cache.Put(7, "ada")
+	fmt.Println(cache.Size())
 
-	val, ok := cache.Get(4)
+	cache.Put(3, "sf")
+	fmt.Println(cache.Size())
+
+	val, ok := cache.Get(1)
 	fmt.Println(val, ok)
 
-	val, ok = cache.Get(5)
+	// val, ok = cache.Get(2)
+	// fmt.Println(val, ok)
+
+	val, ok = cache.Get(2)
+	fmt.Println(val, ok)
+
+	val, ok = cache.Get(4)
+	fmt.Println(val, ok)
+
+	cache.Put(5, "sf")
+	val, ok = cache.Get(3)
 	fmt.Println(val, ok)
 
 	fmt.Println(cache.Size())
